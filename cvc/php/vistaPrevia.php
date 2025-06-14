@@ -7,11 +7,6 @@ $sql = "SELECT * FROM datos WHERE id = 1";
 $result = $_conexionDB->query($sql);
 $_SQLdatos = $result->fetch_assoc();
 
-// Comprobacion de coneccion con la base
-if (!$result) {
-    die("Error en la consulta: " . $_conexionDB->error);
-}
-
 // Consulta para obtener experiencias laborales
 $_sentenciaSQL_exp = "SELECT * FROM experiencia";
 $_SQLexperiencias = $_conexionDB->query($_sentenciaSQL_exp);
@@ -25,7 +20,6 @@ $_sentenciaSQL_hab = "SELECT * FROM habilidades";
 $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +42,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
         <!-- Barra de navegación -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary d-print-none">
             <div class="container">
-                <a class="navbar-brand" href="index.php">CVC</a>
+                <a class="navbar-brand" href="index.php">CVC-Panel de Administrador</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -63,8 +57,9 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="editar.php">
-                                <i class="fas fa-user-lock"></i> Admin
+                            <a class="nav-link" href="editar.php">Panel de Administrador</a>
+                            <a class="nav-link" href="index.php">
+                                <i class="fas fa-user-lock"></i> Cerrar Sesón
                             </a>
                         </li>
                     </ul>
@@ -194,8 +189,5 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
     </footer>
 
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </html>
