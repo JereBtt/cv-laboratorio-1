@@ -2,122 +2,26 @@
 // Conexion a la base de datos
 require_once('db.php');
 
-// Funcion para ver si las tablas existes si no las crea con datos por defecto
-function verificarYCrear($_conexionDB)
-{
-    // Verificamos si existe la tabla 
-    $result = $_conexionDB->query("SHOW TABLES LIKE 'datos'");
-    if ($result->num_rows == 0) {
-        // Crear tabla datos
-        $_sentenciaSQL = "CREATE TABLE datos (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            nombre VARCHAR(255) NOT NULL DEFAULT 'Tu Nombre',
-            puesto VARCHAR(255) NOT NULL DEFAULT 'Tu Puesto',
-            perfil TEXT NOT NULL DEFAULT 'Describe tu perfil profesional aquí',
-            foto VARCHAR(255) DEFAULT 'https://via.placeholder.com/200x200',
-            email VARCHAR(255) NOT NULL DEFAULT 'tu@email.com',
-            telefono VARCHAR(50) DEFAULT '+54 XXX XXX XXXX',
-            ubicacion VARCHAR(255) DEFAULT 'Tu Ciudad, Argentina',
-            publicaciones TEXT,
-            logros TEXT,
-            docencia TEXT,
-            mostrar_publicaciones TINYINT(1) DEFAULT 0,
-            mostrar_logros TINYINT(1) DEFAULT 0,
-            mostrar_docencia TINYINT(1) DEFAULT 0
-        )";
-        $_conexionDB->query($_sentenciaSQL);
-
-        // Insertar datos por defecto
-
-        $_conexionDB->query("INSERT INTO datos (id) VALUES (1)");
-    }
-
-    // Verificar si existe la tabla experiencia
-    $result = $_conexionDB->query("SHOW TABLES LIKE 'experiencia'");
-    if ($result->num_rows == 0) {
-        $_sentenciaSQL = "CREATE TABLE experiencia (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            empresa VARCHAR(255) NOT NULL,
-            puesto VARCHAR(255) NOT NULL,
-            fecha_inicio VARCHAR(50) NOT NULL,
-            fecha_fin VARCHAR(50) NOT NULL,
-            proyecto VARCHAR(255) NOT NULL,
-            tecnologias TEXT,
-            descripcion TEXT NOT NULL
-        )";
-        $_conexionDB->query($_sentenciaSQL);
-    }
-
-    // Verificar si existe la tabla educacion
-    $result = $_conexionDB->query("SHOW TABLES LIKE 'educacion'");
-    if ($result->num_rows == 0) {
-        $_sentenciaSQL = "CREATE TABLE educacion (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            institucion VARCHAR(255) NOT NULL,
-            titulo VARCHAR(255) NOT NULL,
-            fecha_inicio VARCHAR(50) NOT NULL,
-            fecha_fin VARCHAR(50) NOT NULL,
-            descripcion TEXT
-        )";
-        $_conexionDB->query($_sentenciaSQL);
-    }
-
-    // Verificar si existe la tabla habilidades
-    $result = $_conexionDB->query("SHOW TABLES LIKE 'habilidades'");
-    if ($result->num_rows == 0) {
-        $_sentenciaSQL = "CREATE TABLE habilidades (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            nombre VARCHAR(255) NOT NULL,
-            nivel INT NOT NULL CHECK (nivel >= 0 AND nivel <= 100)
-        )";
-        $_conexionDB->query($_sentenciaSQL);
-    }
-
-    // Verificar si existe la tabla usuarios
-    $result = $_conexionDB->query("SHOW TABLES LIKE 'usuarios'");
-    if ($result->num_rows == 0) {
-        $_sentenciaSQL = "CREATE TABLE usuarios (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            username VARCHAR(50) UNIQUE NOT NULL,
-            password VARCHAR(255) NOT NULL
-        )";
-        $_conexionDB->query($_sentenciaSQL);
-
-        // Crear usuario por defecto: admin / admin123
-        $password_hash = password_hash('admin123', PASSWORD_DEFAULT);
-        $_conexionDB->query("INSERT INTO usuarios (username, password) VALUES ('admin', '$password_hash')");
-    }
-}
-// Llamamos a la funcion verificar y crear tablas si no existe
-verificarYCrear($_conexionDB);
-
 // Consulta para obtener los datos del CV
 $sql = "SELECT * FROM datos WHERE id = 1";
-$result = $_conexionDB->query($sql);
+$_SQLdatos = $_conexionDB->query($sql);
+$_SQLdatos->fetch_assoc();
 
+// Comprobacion de coneccion con la base
 if (!$result) {
     die("Error en la consulta: " . $_conexionDB->error);
 }
 
-
-$_SQLdatos = $result->fetch_assoc();
-if (!$_SQLdatos) {
-    // Si no existe el registro, crearlo
-    $_conexionDB->query("INSERT INTO datos (id) VALUES (1)");
-    $result = $_conexionDB->query($sql);
-    $_SQLdatos = $result->fetch_assoc();
-}
-
 // Consulta para obtener experiencias laborales
-$_sentenciaSQL_exp = "SELECT * FROM experiencia ORDER BY fecha_fin DESC";
+$_sentenciaSQL_exp = "SELECT * FROM experiencia";
 $_SQLexperiencias = $_conexionDB->query($_sentenciaSQL_exp);
 
 // Consulta para obtener educación
-$_sentenciaSQL_edu = "SELECT * FROM educacion ORDER BY fecha_fin DESC";
+$_sentenciaSQL_edu = "SELECT * FROM educacion";
 $_SQLeducacion = $_conexionDB->query($_sentenciaSQL_edu);
 
 // Consulta para obtener habilidades
-$_sentenciaSQL_hab = "SELECT * FROM habilidades ORDER BY nivel DESC";
+$_sentenciaSQL_hab = "SELECT * FROM habilidades";
 $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 
 ?>
@@ -182,15 +86,12 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                 <img src="<?php echo $_SQLdatos['foto']; ?>" alt="Foto de perfil" class="img-fluid rounded-circle perfil-img">
                             </div>
                             <div>
-                                <h3> <?php echo $_SQLdatos['nombre'] ?> </h3>
+                                <h3> <?php echo $_SQLdatos['nombre'] . $_SQLdatos['apellido'] ?> </h3>
                             </div>
                             <div class="conteiner_datos">
-                                <p><?php echo $_SQLdatos['puesto'] ?></p>
-                                <p><?php echo $_SQLdatos['email'] ?></p>
-                                <p><?php echo $_SQLdatos['telefono'] ?></p>
-                                <p><?php echo $_SQLdatos['ubicacion'] ?></p>
-                                <h5>Perfil profecional</h5>
-                                <p><?php echo $_SQLdatos['perfil'] ?></p>
+                                <p><?php echo $_SQLdatos['correo'] ?></p>
+                                <p><?php echo $_SQLdatos['celular'] ?></p>
+                                <p><?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . " " . $_SQLdatos['localidad'] ?></p>
                             </div>
                         </div>
                         <div class="col-lg-9 columna">
@@ -210,12 +111,8 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                     <p class="card-text"><?php echo $_exp['puesto']; ?></p>
                                                 </div>
                                                 <div>
-                                                    <h5 class="text-body-secondary titulo2">Proyecto: </h5>
-                                                    <p class="card-text"><?php echo $_exp['proyecto']; ?></p>
-                                                </div>
-                                                <div>
                                                     <h5 class="text-body-secondary titulo2">Tecnologias: </h5>
-                                                    <p class="card-text"><?php echo $_exp['tecnologias']; ?></p>
+                                                    <p class="card-text"><?php echo $_exp['herramientas']; ?></p>
                                                 </div>
                                                 <div>
                                                     <h5 class="text-body-secondary titulo2">Descripcion: </h5>
@@ -224,7 +121,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 
                                             </div>
                                             <div class="card-footer text-body-secondary text-center">
-                                                <?php echo $_exp['fecha_inicio'] . '-' . $_exp['fecha_fin']; ?>
+                                                <?php echo $_exp['duracion']; ?>
                                             </div>
                                         </div>
 
@@ -245,8 +142,8 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                     <p class="card-text"><?php echo $_hab['nombre']; ?></p>
                                                 </div>
                                                 <div>
-                                                    <h5 class="card-title text-body-secondary titulo2">Nivel: </h5>
-                                                    <p class="card-text"><?php echo $_hab['nivel']; ?></p>
+                                                    <h5 class="card-title text-body-secondary titulo2">Descripcion: </h5>
+                                                    <p class="card-text"><?php echo $_hab['descripcion']; ?></p>
                                                 </div>
 
                                             </div>
@@ -264,7 +161,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 
                                         <div class="card m-4 tarjeta">
                                             <div class="card-header text-center">
-                                                <h5 class="card-title titulo1"><?php echo $_edu['titulo']; ?></h5>
+                                                <h5 class="card-title titulo1"><?php echo $_edu['certificacion']; ?></h5>
                                             </div>
                                             <div class="card-body">
                                                 <div>
@@ -272,14 +169,9 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                     <p class="card-text"><?php echo $_edu['institucion']; ?></p>
                                                 </div>
 
-                                                <div>
-                                                    <h5 class="card-title text-body-secondary titulo2">Descripcion: </h5>
-                                                    <p class="card-text"><?php echo $_edu['descripcion']; ?></p>
-                                                </div>
-
                                             </div>
                                             <div class="card-footer text-body-secondary text-center">
-                                                <?php echo $_edu['fecha_inicio'] . '-' . $_edu['fecha_fin']; ?>
+                                                <?php echo $_edu['duracion']; ?>
                                             </div>
                                         </div>
 
