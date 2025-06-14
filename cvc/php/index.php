@@ -146,6 +146,17 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
             <div class="container">
                 <a class="navbar-brand" href="index.php">CVC</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#experiencia">Experiencia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#habilidades">Habilidades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#educacion">Educación</a>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="admin.php">
@@ -165,8 +176,8 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                 <div class="col-lg-1">
                 </div>
                 <div class="col-lg-10 colum">
-                    <div class="row contenido">
-                        <div class="col-lg-2">
+                    <div class="row">
+                        <div class="col-lg-3 container_aside">
                             <div class="imagen_persona">
                                 <img src="<?php echo $_SQLdatos['foto']; ?>" alt="Foto de perfil" class="img-fluid rounded-circle perfil-img">
                             </div>
@@ -182,8 +193,8 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                 <p><?php echo $_SQLdatos['perfil'] ?></p>
                             </div>
                         </div>
-                        <div class="col-lg-10 columna">
-                            <div class="container_seccion">
+                        <div class="col-lg-9 columna">
+                            <div class="container_seccion" id="experiencia">
                                 <h3 class="titulo-seccion">Experiencia laboral</h3>
                                 <div class="">
                                     <?php while ($_exp = $_SQLexperiencias->fetch_assoc()): ?>
@@ -195,19 +206,19 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                             </div>
                                             <div class="card-body">
                                                 <div>
-                                                    <h5 class="card-title text-body-secondary titulo2">Puesto: </h5>
+                                                    <h5 class="text-body-secondary titulo2">Puesto: </h5>
                                                     <p class="card-text"><?php echo $_exp['puesto']; ?></p>
                                                 </div>
                                                 <div>
-                                                    <h5 class="card-title text-body-secondary titulo2">Proyecto: </h5>
+                                                    <h5 class="text-body-secondary titulo2">Proyecto: </h5>
                                                     <p class="card-text"><?php echo $_exp['proyecto']; ?></p>
                                                 </div>
                                                 <div>
-                                                    <h5 class="card-title text-body-secondary titulo2">Tecnologias: </h5>
+                                                    <h5 class="text-body-secondary titulo2">Tecnologias: </h5>
                                                     <p class="card-text"><?php echo $_exp['tecnologias']; ?></p>
                                                 </div>
                                                 <div>
-                                                    <h5 class="card-title text-body-secondary titulo2">Descripcion: </h5>
+                                                    <h5 class="text-body-secondary titulo2">Descripcion: </h5>
                                                     <p class="card-text"><?php echo $_exp['descripcion']; ?></p>
                                                 </div>
 
@@ -221,7 +232,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                     <?php endwhile; ?>
                                 </div>
                             </div>
-                            <div class="container_seccion">
+                            <div class="container_seccion" id="habilidades">
                                 <h3 class="titulo-seccion">Habilidades</h3>
                                 <div class="">
                                     <?php while ($_hab = $_SQLhabilidades->fetch_assoc()): ?>
@@ -245,7 +256,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                     <?php endwhile; ?>
                                 </div>
                             </div>
-                            <div class="container_seccion">
+                            <div class="container_seccion" id="educacion">
                                 <h3 class="titulo-seccion">Educación</h3>
                                 <div class="">
                                     <?php while ($_edu = $_SQLeducacion->fetch_assoc()): ?>

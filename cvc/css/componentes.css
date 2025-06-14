@@ -24,3 +24,12 @@
     margin-top: 1rem;
     margin-bottom: 0.3rem;
 }
+
+.card-body {
+    background-color: rgb(225, 231, 241);
+}
+
+.card-title {
+    background: linear-gradient(135deg, #7f94b4, #48e);
+    padding: 10px;
+}
