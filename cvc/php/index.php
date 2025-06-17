@@ -63,15 +63,14 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="editar.php">
-                                <i class="fas fa-user-lock"></i> Admin
+                            <a class="nav-link fas fa-user-lock" href="login.php"></i> Admin
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     </header>
 
     <main>
@@ -86,12 +85,12 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                 <img src="<?php echo $_SQLdatos['foto']; ?>" alt="Foto de perfil" class="img-fluid rounded-circle perfil-img">
                             </div>
                             <div>
-                                <h3> <?php echo $_SQLdatos['nombre'] . $_SQLdatos['apellido'] ?> </h3>
+                                <h3> <?php echo $_SQLdatos['nombre'] . " ". $_SQLdatos['apellido'] ?> </h3>
                             </div>
                             <div class="conteiner_datos">
-                                <p><?php echo $_SQLdatos['correo'] ?></p>
-                                <p><?php echo $_SQLdatos['celular'] ?></p>
-                                <p><?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . " " . $_SQLdatos['localidad'] ?></p>
+                               <p class="mb-1 text-muted"><i class="bi bi-envelope"></i> <?php echo $_SQLdatos['correo']; ?></p>
+                                <p class="mb-1 text-muted"><i class="bi bi-telephone"></i> <?php echo $_SQLdatos['celular']; ?></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-geo-alt"></i> <?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . ", " . $_SQLdatos['localidad']; ?></p>
                             </div>
                         </div>
                         <div class="col-lg-9 columna">
@@ -193,6 +192,9 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 
     </footer>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -38,10 +38,36 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 </head>
 
 <body>
-    <!-- Llamamos al header -->
-    <?php
-    require_once('header.php');
-    ?>
+    <header>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary d-print-none">
+        <div class="container">
+            <a class="navbar-brand">CVC - Vista Previa</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experiencia">Experiencia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#habilidades">Habilidades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#educacion">Educación</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="editar.php">Panel de Administrador</a>
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fas fa-user-lock"></i> Cerrar sesión
+                            </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    </header>
 
     <main>
         <div class="container">
@@ -55,12 +81,12 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                 <img src="<?php echo $_SQLdatos['foto']; ?>" alt="Foto de perfil" class="img-fluid rounded-circle perfil-img">
                             </div>
                             <div>
-                                <h3> <?php echo $_SQLdatos['nombre'] . $_SQLdatos['apellido'] ?> </h3>
+                                <h3> <?php echo $_SQLdatos['nombre'] ." ".$_SQLdatos['apellido'] ?> </h3>
                             </div>
                             <div class="conteiner_datos">
-                                <p><?php echo $_SQLdatos['correo'] ?></p>
-                                <p><?php echo $_SQLdatos['celular'] ?></p>
-                                <p><?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . " " . $_SQLdatos['localidad'] ?></p>
+                               <p class="mb-1 text-muted"><i class="bi bi-envelope"></i> <?php echo $_SQLdatos['correo']; ?></p>
+                                <p class="mb-1 text-muted"><i class="bi bi-telephone"></i> <?php echo $_SQLdatos['celular']; ?></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-geo-alt"></i> <?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . ", " . $_SQLdatos['localidad']; ?></p>
                             </div>
                         </div>
                         <div class="col-lg-9 columna">
@@ -156,12 +182,31 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
             </div>
         </div>
 
+             <!-- Modal de Confirmación para Cerrar Sesión -->
+        <div class ="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body ">¿Estás seguro de que deseas cerrar sesión?</div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
+                    </div>
+               </div>
+            </div>
+        </div>  
     </main>
 
     <footer>
 
     </footer>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
-
 </html>

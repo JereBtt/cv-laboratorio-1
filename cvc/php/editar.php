@@ -1,4 +1,6 @@
+
 <?php
+
 // Conexion a la base de datos
 require_once('db.php');
 
@@ -38,10 +40,13 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 </head>
 
 <body>
-    <!-- Llamamos al header -->
-    <?php
+    <header>
+    <!-- Barra de navegación -->
+     <?php
     require_once('header.php');
     ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    </header>
 
     <main>
         <div class="container">
@@ -55,17 +60,19 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                 <img src="<?php echo $_SQLdatos['foto']; ?>" alt="Foto de perfil" class="img-fluid rounded-circle perfil-img">
                             </div>
                             <div>
-                                <h3> <?php echo $_SQLdatos['nombre'] . $_SQLdatos['apellido'] ?> </h3>
+                                <h3> <?php echo $_SQLdatos['nombre'] ." ". $_SQLdatos['apellido'] ?> </h3>
                             </div>
-                            <div class="conteiner_datos">
-                                <p><?php echo $_SQLdatos['correo'] ?></p>
-                                <p><?php echo $_SQLdatos['celular'] ?></p>
-                                <p><?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . " " . $_SQLdatos['localidad'] ?></p>
+                           <div class="conteiner_datos">
+                               <p class="mb-1 text-muted"><i class="bi bi-envelope"></i> <?php echo $_SQLdatos['correo']; ?></p>
+                                <p class="mb-1 text-muted"><i class="bi bi-telephone"></i> <?php echo $_SQLdatos['celular']; ?></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-geo-alt"></i> <?php echo $_SQLdatos['calle'] . " " . $_SQLdatos['numero'] . ", " . $_SQLdatos['localidad']; ?></p>
                             </div>
                         </div>
+
+                        <!--Experiencia -->
                         <div class="col-lg-9 columna">
                             <div class="container_seccion" id="experiencia">
-                                <h3 class="titulo-seccion">Experiencia laboral</h3>
+                                                <h3 class="titulo-seccion">Experiencia laboral</h3>
                                 <div class="">
                                     <?php while ($_exp = $_SQLexperiencias->fetch_assoc()): ?>
 
@@ -92,7 +99,8 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                         data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                                                         Editar
                                                     </button>
-                                                    <!--ventana modal Editar-->
+
+                                                    <!--ventana modal Editar Experiencia-->
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog">
@@ -112,18 +120,18 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                                                 value="<?php echo $_exp['empresa']; ?>" />
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="recipient-name" class="col-form-label">Puesto</label>
+                                                                            <label for="message-text" class="col-form-label">Puesto</label>
                                                                             <input type="text" class="form-control" id="recipient-name" maxlength="50"
-                                                                                placeholder="<?php echo $_exp['puesto']; ?>" />
+                                                                                value="<?php echo $_exp['puesto']; ?>" />
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="message-text" class="col-form-label">Herramientas</label>
-                                                                            <textarea class="form-control" id="message-text" maxlength="80"
+                                                                            <label for="message-text" class="col-form-label">Tecnologias</label>
+                                                                            <input class="form-control" id="message-text" maxlength="80"
                                                                                 value="<?php echo $_exp['herramientas']; ?>"></textarea>
                                                                         </div>
                                                                         <div class="mb-3">
                                                                             <label for="message-text" class="col-form-label">Descripcion</label>
-                                                                            <textarea class="form-control" id="message-text" maxlength="80"
+                                                                            <input class="form-control" id="message-text" maxlength="80"
                                                                                 value="<?php echo $_exp['descripcion']; ?>"></textarea>
                                                                         </div>
                                                                         <div class="mb-3">
@@ -136,9 +144,9 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                                        Cerrar
+                                                                        Cancelar
                                                                     </button>
-                                                                    <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
+                                                                    <button type="button" class="btn btn-success boton" data-bs-toggle="modal"
                                                                         data-bs-target="#exampleModal3">
                                                                         Editar
                                                                     </button>
@@ -147,7 +155,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                         </div>
                                                     </div>
 
-                                                    <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
+                                                    <button type="button" class="btn btn-danger boton" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
                                                         Eliminar
                                                     </button>
@@ -184,7 +192,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                         data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                                                         Editar
                                                     </button>
-                                                    <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
+                                                    <button type="button" class="btn btn-danger boton" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
                                                         Eliminar
                                                     </button>
@@ -217,7 +225,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                         data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                                                         Editar
                                                     </button>
-                                                    <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
+                                                    <button type="button" class="btn btn-danger boton" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
                                                         Eliminar
                                                     </button>
@@ -262,7 +270,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 Cancelar
                             </button>
-                            <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-danger boton" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal4">
                                 Eliminar
                             </button>
@@ -289,7 +297,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                             Su experiencia se edito exitosamente!!!!
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn btn-secondary" id="btn-ok-modal" data-bs-dismiss="modal">OK</a>
+                            <a href="#" class="btn btn-primary" id="btn-ok-modal" data-bs-dismiss="modal">OK</a>
                         </div>
                     </div>
                 </div>
@@ -312,12 +320,33 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                             Su experiencia se elimino exitosamente!!!!
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn btn-secondary" id="btn-ok-modal" data-bs-dismiss="modal">OK</a>
+                            <a href="#" class="btn btn-primary" id="btn-ok-modal" data-bs-dismiss="modal">OK</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+             <!-- Modal de Confirmación para Cerrar Sesión -->
+        <div class ="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body ">¿Estás seguro de que deseas cerrar sesión?</div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
+                    </div>
+               </div>
+            </div>
+        </div>  
+    </main>
+
 
     </main>
 
