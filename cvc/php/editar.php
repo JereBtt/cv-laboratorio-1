@@ -38,36 +38,10 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 </head>
 
 <body>
-    <header>
-        <!-- Barra de navegación -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary d-print-none">
-            <div class="container">
-                <a class="navbar-brand" href="index.php">CVC-Panel de Administrador</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#experiencia">Experiencia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#habilidades">Habilidades</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#educacion">Educación</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="vistaPrevia.php">Vista previa</a>
-                            <a class="nav-link" href="index.php">
-                                <i class="fas fa-user-lock"></i> Cerrar Sesón
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-    </header>
+    <!-- Llamamos al header -->
+    <?php
+    require_once('header.php');
+    ?>
 
     <main>
         <div class="container">
@@ -118,6 +92,61 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                         data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                                                         Editar
                                                     </button>
+                                                    <!--ventana modal Editar-->
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        Editar experiencia
+                                                                    </h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <!--Trae el formulario cargado con los datos para editar-->
+                                                                    <form>
+                                                                        <div class="mb-3">
+                                                                            <label for="recipient-name" class="col-form-label">Empresa</label>
+                                                                            <input type="text" class="form-control" id="recipient-name" maxlength="50"
+                                                                                value="<?php echo $_exp['empresa']; ?>" />
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="recipient-name" class="col-form-label">Puesto</label>
+                                                                            <input type="text" class="form-control" id="recipient-name" maxlength="50"
+                                                                                placeholder="<?php echo $_exp['puesto']; ?>" />
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="message-text" class="col-form-label">Herramientas</label>
+                                                                            <textarea class="form-control" id="message-text" maxlength="80"
+                                                                                value="<?php echo $_exp['herramientas']; ?>"></textarea>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="message-text" class="col-form-label">Descripcion</label>
+                                                                            <textarea class="form-control" id="message-text" maxlength="80"
+                                                                                value="<?php echo $_exp['descripcion']; ?>"></textarea>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="recipient-name" class="col-form-label">Duracion</label>
+                                                                            <input type="text" class="form-control" id="recipient-name" maxlength="20"
+                                                                                value="<?php echo $_exp['duracion']; ?>" />
+                                                                        </div>
+
+                                                                    </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                        Cerrar
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal3">
+                                                                        Editar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
                                                         Eliminar
@@ -128,6 +157,7 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
                                                 <?php echo $_exp['duracion']; ?>
                                             </div>
                                         </div>
+
 
 
                                     <?php endwhile; ?>
@@ -212,59 +242,6 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
         </div>
 
 
-        <!--ventana modal editar-->
-        <section>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                Editar experiencia
-                            </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Profecion</label>
-                                    <input type="text" class="form-control" id="recipient-name" maxlength="50"
-                                        placeholder="Maximo 50 letras" />
-                                </div>
-                                <!--Tiempo ejercido-->
-                                <div>
-                                    <fieldset class="fieldset">
-                                        <legend class="legend">Tiempo ejercido</legend>
-                                        <div class="mb-3">
-                                            <label for="recipient-name" class="col-form-label">Desde</label>
-                                            <input type="date" class="form-control" id="recipient-name" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="recipient-name" class="col-form-label">Hasta</label>
-                                            <input type="date" class="form-control" id="recipient-name" />
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Descripcion</label>
-                                    <textarea class="form-control" id="message-text" maxlength="600"
-                                        placeholder="Maximo 600 letras"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Cerrar
-                            </button>
-                            <button type="button" class="btn btn-primary boton" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal3">
-                                Editar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!--ventana modal eliminar-->
         <section>
@@ -348,6 +325,31 @@ $_SQLhabilidades = $_conexionDB->query($_sentenciaSQL_hab);
 
     </footer>
 
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
 </body>
+
+
 
 </html>
